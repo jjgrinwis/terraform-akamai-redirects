@@ -5,3 +5,5 @@ This will create a single Akamai Delivery configuration with a very simple confi
 Terraform script will automatically request Secure By Default certs and in this example using EdgeDNS to automatically create some CNAME records.
 
 When testing this make sure to add your own CPcode in the config. We will add that as a variable in some later version.
+
+Just add your hostname:redirect key value combinations to the hostname_redirect map variable and off you go.
