@@ -1,0 +1,119 @@
+{
+    "rules": {
+        "name": "default",
+        "children": [
+            {
+                "name": "Redirect to HTTPS",
+                "children": [],
+                "behaviors": [
+                    {
+                        "name": "redirect",
+                        "options": {
+                            "queryString": "APPEND",
+                            "responseCode": 301,
+                            "destinationHostname": "SAME_AS_REQUEST",
+                            "destinationPath": "SAME_AS_REQUEST",
+                            "destinationProtocol": "HTTPS",
+                            "mobileDefaultChoice": "DEFAULT"
+                        }
+                    }
+                ],
+                "criteria": [
+                    {
+                        "name": "requestProtocol",
+                        "options": {
+                            "value": "HTTP"
+                        }
+                    }
+                ],
+                "criteriaMustSatisfy": "all",
+                "comments": "Redirect to the same URL on HTTPS protocol, issuing a 301 response code (Moved Permanently). You may change the response code to 302 if needed."
+            },
+            {
+                "name": "Redirect Cloudlet",
+                "children": [],
+                "behaviors": [
+                    {
+                        "name": "edgeRedirector",
+                        "options": {
+                            "enabled": true,
+                            "isSharedPolicy": false,
+                            "cloudletPolicy": {
+                                "id": ${cloudlet_id},
+                                "name": ${cloudlet_name}
+                            }
+                        }
+                    }
+                ],
+                "criteria": [],
+                "criteriaMustSatisfy": "all"
+            },
+            {
+                "name": "Enable HTTP2",
+                "children": [],
+                "behaviors": [
+                    {
+                        "name": "http2",
+                        "options": {
+                            "enabled": ""
+                        }
+                    }
+                ],
+                "criteria": [],
+                "criteriaMustSatisfy": "all",
+                "comments": ""
+            }
+        ],
+        "behaviors": [
+            {
+                "name": "origin",
+                "options": {
+                    "cacheKeyHostname": "REQUEST_HOST_HEADER",
+                    "compress": true,
+                    "enableTrueClientIp": true,
+                    "forwardHostHeader": "REQUEST_HOST_HEADER",
+                    "httpPort": 80,
+                    "httpsPort": 443,
+                    "originCertificate": "",
+                    "originSni": true,
+                    "originType": "CUSTOMER",
+                    "ports": "",
+                    "trueClientIpClientSetting": false,
+                    "trueClientIpHeader": "True-Client-IP",
+                    "verificationMode": "PLATFORM_SETTINGS",
+                    "hostname": "not.a.real.backend"
+                }
+            },
+            {
+                "name": "caching",
+                "options": {
+                    "behavior": "NO_STORE"
+                }
+            },
+            {
+                "name": "cacheRedirect",
+                "options": {
+                    "enabled": "true"
+                }
+            },
+            {
+                "name": "cpCode",
+                "options": {
+                    "value": {
+                        "id": 789214,
+                        "description": "jgrinwis",
+                        "products": [],
+                        "createdDate": 1541508578000,
+                        "cpCodeLimits": null,
+                        "name": "jgrinwis"
+                    }
+                }
+            }
+        ],
+        "options": {
+            "is_secure": true
+        },
+        "variables": [],
+        "comments": "The Default Rule template contains all the necessary and recommended behaviors. Rules are evaluated from top to bottom and the last matching rule wins."
+    }
+}
